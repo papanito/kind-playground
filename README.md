@@ -13,7 +13,10 @@ kind create cluster --config kind-config.yaml
 add ingress
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+kubectl create ns ingress-nginx
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install nginx-ingress ingress-nginx/ingress-nginx --set controller.service.type=NodePort -n ingress-nginx
 ```
 
 Now the Ingress is all setup. Wait until is ready to process requests running:
